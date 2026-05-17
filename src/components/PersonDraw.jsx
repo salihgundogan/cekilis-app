@@ -41,9 +41,6 @@ export default function PersonDraw({
           <Users size={28} color="#2C355A" />
           Kişi Çekilişi
         </h2>
-        <div className="stats-badge">
-          Kalan Kişi: {pool.length} / {originalPool.length}
-        </div>
       </div>
       
       <div className="draw-area">

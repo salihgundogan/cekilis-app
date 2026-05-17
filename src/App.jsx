@@ -18,7 +18,7 @@ function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <img src={eivLogo} alt="EIV Logo" style={{ height: '48px', borderRadius: '8px' }} />
           <h1 className="text-gradient" style={{ margin: 0 }}>
-            Şanslı Çekiliş
+            Emine İnanç Üniversite - Bilgi Yarışması Çekilişi
           </h1>
         </div>
         

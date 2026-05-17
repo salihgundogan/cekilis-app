@@ -39,9 +39,6 @@ export default function PrizeDraw({
           <Gift size={28} color="#D4AF37" />
           Ödül Çekilişi
         </h2>
-        <div className="stats-badge">
-          Kalan Ödül: {pool.length} / {originalPool.length}
-        </div>
       </div>
       
       <div className="draw-area">
