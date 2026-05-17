@@ -26,7 +26,7 @@ export default function PersonDraw({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#8b5cf6', '#ec4899', '#ffffff']
+        colors: ['#2C355A', '#D4AF37', '#ffffff']
       });
     }, 600); // Wait a bit for suspense
   };
@@ -38,7 +38,7 @@ export default function PersonDraw({
     <div className="split-section">
       <div className="section-header">
         <h2 className="section-title">
-          <Users size={28} color="#8b5cf6" />
+          <Users size={28} color="#2C355A" />
           Kişi Çekilişi
         </h2>
         <div className="stats-badge">

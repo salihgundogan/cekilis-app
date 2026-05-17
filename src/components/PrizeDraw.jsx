@@ -24,7 +24,7 @@ export default function PrizeDraw({
         particleCount: 80,
         spread: 60,
         origin: { y: 0.8 },
-        colors: ['#f59e0b', '#10b981', '#3b82f6']
+        colors: ['#D4AF37', '#2C355A', '#bc992d']
       });
     }, 600);
   };
@@ -36,7 +36,7 @@ export default function PrizeDraw({
     <div className="split-section">
       <div className="section-header">
         <h2 className="section-title">
-          <Gift size={28} color="#ec4899" />
+          <Gift size={28} color="#D4AF37" />
           Ödül Çekilişi
         </h2>
         <div className="stats-badge">
@@ -65,7 +65,7 @@ export default function PrizeDraw({
               className="btn btn-primary" 
               onClick={handleDraw}
               disabled={pool.length === 0 || isDrawing}
-              style={{ background: 'linear-gradient(135deg, #ec4899, #f59e0b)', boxShadow: '0 4px 15px rgba(236, 72, 153, 0.4)' }}
+              style={{ background: 'linear-gradient(135deg, #D4AF37, #b8972e)', boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)' }}
             >
               <Play size={18} />
               Ödül Çek
@@ -78,7 +78,7 @@ export default function PrizeDraw({
                 className="btn btn-primary" 
                 onClick={handleDraw}
                 disabled={pool.length === 0 || isDrawing}
-                style={{ background: 'linear-gradient(135deg, #ec4899, #f59e0b)', boxShadow: '0 4px 15px rgba(236, 72, 153, 0.4)' }}
+                style={{ background: 'linear-gradient(135deg, #D4AF37, #b8972e)', boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)' }}
               >
                 <RefreshCw size={18} />
                 Yeni Ödül Çek

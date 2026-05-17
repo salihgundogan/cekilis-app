@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Settings, Sparkles } from 'lucide-react';
+import { Settings } from 'lucide-react';
+import eivLogo from './assets/eiv-logo.jpeg';
 import './App.css';
 import { useRaffleState } from './hooks/useRaffleState';
 import PersonDraw from './components/PersonDraw';
@@ -13,10 +14,12 @@ function App() {
   return (
     <div className="app-container">
       <header className="header">
-        <h1 className="text-gradient">
-          <Sparkles color="#8b5cf6" size={32} />
-          Şanslı Çekiliş
-        </h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <img src={eivLogo} alt="EIV Logo" style={{ height: '48px', borderRadius: '8px' }} />
+          <h1 className="text-gradient" style={{ margin: 0 }}>
+            Şanslı Çekiliş
+          </h1>
+        </div>
         
         <button 
           className="btn btn-secondary" 
