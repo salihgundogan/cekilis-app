@@ -52,7 +52,14 @@ export default function PersonDraw({
             <div className="result-empty animate-pulse">Çekiliyor...</div>
           ) : current ? (
             <div className="result-name text-gradient-accent animate-pop-in">
-              {current}
+              {typeof current === 'object' && current !== null ? (
+                <>
+                  <span style={{ fontSize: '0.6em', opacity: 0.8, display: 'block', marginBottom: '8px' }}>
+                    #{current.id}
+                  </span>
+                  {current.name}
+                </>
+              ) : current}
             </div>
           ) : isFinished ? (
             <div className="result-empty">Herkes çekildi!</div>

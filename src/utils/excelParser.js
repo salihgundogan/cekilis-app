@@ -27,9 +27,13 @@ export const parseExcelFile = (file) => {
           const row = jsonData[i];
           // We only care about Column B (index 1) having a valid string/value
           if (row && row.length >= 2) {
+            const id = row[0];
             const name = row[1];
             if (name !== null && name !== undefined && String(name).trim() !== '') {
-              validParticipants.push(String(name).trim());
+              validParticipants.push({
+                id: id !== null && id !== undefined ? String(id).trim() : '?',
+                name: String(name).trim()
+              });
             }
           }
         }
