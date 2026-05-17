@@ -1,5 +1,13 @@
 import * as XLSX from 'xlsx';
 
+const capitalizeName = (str) => {
+  if (!str) return '';
+  return str.split(' ').map(word => {
+    if (word.length === 0) return '';
+    return word.charAt(0).toLocaleUpperCase('tr-TR') + word.slice(1).toLocaleLowerCase('tr-TR');
+  }).join(' ');
+};
+
 export const parseExcelFile = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -32,7 +40,7 @@ export const parseExcelFile = (file) => {
             if (name !== null && name !== undefined && String(name).trim() !== '') {
               validParticipants.push({
                 id: id !== null && id !== undefined ? String(id).trim() : '?',
-                name: String(name).trim()
+                name: capitalizeName(String(name).trim())
               });
             }
           }
