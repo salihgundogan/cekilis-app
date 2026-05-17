@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Settings } from 'lucide-react';
 import eivLogo from './assets/eiv-logo.jpeg';
+import eivLogoYazisiz from './assets/yazisiz-eiv-logo.jpeg';
 import './App.css';
 import { useRaffleState } from './hooks/useRaffleState';
 import PersonDraw from './components/PersonDraw';
@@ -31,7 +32,7 @@ function App() {
       </header>
 
       <main className="main-content glass-panel" style={{ position: 'relative' }}>
-        <img src={eivLogo} alt="Arkaplan Logosu" className="bg-logo" />
+        <img src={eivLogoYazisiz} alt="Arkaplan Logosu" className="bg-logo" />
         
         <PersonDraw 
           pool={raffleState.personPool}
