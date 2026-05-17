@@ -13,6 +13,8 @@ function App() {
 
   return (
     <div className="app-container">
+      <img src={eivLogo} alt="Arkaplan Logosu" className="bg-logo" />
+      
       <header className="header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <img src={eivLogo} alt="EIV Logo" style={{ height: '48px', borderRadius: '8px' }} />
