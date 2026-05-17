@@ -50,8 +50,11 @@ export function useRaffleState() {
   const drawPerson = () => {
     if (personPool.length === 0) return null;
     
-    // Pick random index
-    const randomIndex = Math.floor(Math.random() * personPool.length);
+    // Cryptographically secure random selection
+    const randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    const randomFloat = randomBuffer[0] / (0xffffffff + 1);
+    const randomIndex = Math.floor(randomFloat * personPool.length);
     const selected = personPool[randomIndex];
     
     // Create new pool without the selected person
@@ -98,7 +101,11 @@ export function useRaffleState() {
   const drawPrize = () => {
     if (prizePool.length === 0) return null;
     
-    const randomIndex = Math.floor(Math.random() * prizePool.length);
+    // Cryptographically secure random selection
+    const randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    const randomFloat = randomBuffer[0] / (0xffffffff + 1);
+    const randomIndex = Math.floor(randomFloat * prizePool.length);
     const selected = prizePool[randomIndex];
     
     const newPool = [...prizePool];
