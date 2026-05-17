@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { X, Upload, Plus, Trash2, Users, Gift, CheckCircle } from 'lucide-react';
-import { parseExcelFile } from '../utils/excelParser';
+import { parseExcelFile, parsePrizeExcelFile } from '../utils/excelParser';
 
 export default function SettingsModal({ 
   onClose, 
@@ -9,7 +9,9 @@ export default function SettingsModal({
   const [activeTab, setActiveTab] = useState('participants'); // 'participants' or 'prizes'
   const [newPrize, setNewPrize] = useState('');
   const [uploadStatus, setUploadStatus] = useState(null); // null, 'loading', 'success', 'error'
+  const [prizeUploadStatus, setPrizeUploadStatus] = useState(null);
   const fileInputRef = useRef(null);
+  const prizeFileInputRef = useRef(null);
 
   const {
     originalPersonPool,
@@ -42,6 +44,33 @@ export default function SettingsModal({
     // Reset input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  const handlePrizeFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPrizeUploadStatus('loading');
+    try {
+      const prizes = await parsePrizeExcelFile(file);
+      if (prizes.length > 0) {
+        // Appending uploaded prizes to existing ones
+        prizes.forEach(prize => addPrize(prize));
+        setPrizeUploadStatus('success');
+      } else {
+        setPrizeUploadStatus('error');
+        alert("Geçerli ödül bulunamadı. Lütfen A sütununun dolu olduğundan emin olun.");
+      }
+    } catch (error) {
+      console.error(error);
+      setPrizeUploadStatus('error');
+      alert("Dosya okunurken bir hata oluştu. Lütfen geçerli bir .xlsx dosyası yükleyin.");
+    }
+    
+    // Reset input
+    if (prizeFileInputRef.current) {
+      prizeFileInputRef.current.value = '';
     }
   };
 
@@ -136,6 +165,46 @@ export default function SettingsModal({
 
           {activeTab === 'prizes' && (
             <div className="animate-fade-in">
+              <p style={{ color: 'var(--text-muted)', marginBottom: '16px', fontSize: '0.9rem' }}>
+                A sütununda ödül isimlerinin olduğu bir .xlsx dosyası yükleyebilir veya elle ekleyebilirsiniz.
+              </p>
+
+              <div className="file-upload-area" style={{ marginBottom: '24px', padding: '24px' }} onClick={() => prizeFileInputRef.current?.click()}>
+                <input 
+                  type="file" 
+                  accept=".xlsx, .xls" 
+                  className="file-input" 
+                  ref={prizeFileInputRef}
+                  onChange={handlePrizeFileUpload}
+                />
+                
+                {prizeUploadStatus === 'loading' ? (
+                  <div className="text-gradient animate-pulse" style={{ fontSize: '1.1rem', fontWeight: 600 }}>
+                    Yükleniyor...
+                  </div>
+                ) : prizeUploadStatus === 'success' ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                    <CheckCircle size={32} color="#10b981" />
+                    <div>
+                      <span style={{ fontSize: '1rem', fontWeight: 600, color: '#10b981' }}>Başarılı!</span>
+                      <p style={{ color: 'var(--text-muted)', marginTop: '4px', fontSize: '0.85rem' }}>
+                        Ödüller eklendi.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                    <Upload size={32} color="var(--accent-secondary)" />
+                    <div>
+                      <span style={{ fontSize: '1rem', fontWeight: 600 }}>Ödül Excel Dosyası Yükle</span>
+                      <p style={{ color: 'var(--text-muted)', marginTop: '4px', fontSize: '0.85rem' }}>
+                        Seçmek için tıklayın (.xlsx)
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <form onSubmit={handleAddPrize} className="input-group">
                 <input 
                   type="text" 

@@ -60,3 +60,45 @@ export const parseExcelFile = (file) => {
     reader.readAsArrayBuffer(file);
   });
 };
+
+export const parsePrizeExcelFile = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'array' });
+        
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: null });
+        
+        const validPrizes = [];
+        
+        // Iterate over rows. We assume:
+        // Index 0 -> Column A (Prizes)
+        for (let i = 0; i < jsonData.length; i++) {
+          const row = jsonData[i];
+          if (row && row.length >= 1) {
+            const prize = row[0];
+            if (prize !== null && prize !== undefined && String(prize).trim() !== '') {
+              validPrizes.push(capitalizeName(String(prize).trim()));
+            }
+          }
+        }
+        
+        resolve(validPrizes);
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsArrayBuffer(file);
+  });
+};
