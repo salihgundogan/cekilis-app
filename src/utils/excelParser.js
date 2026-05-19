@@ -27,6 +27,7 @@ export const parseExcelFile = (file) => {
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: null });
         
         const validParticipants = [];
+        const seenNames = new Set(); // Mükerrer kayıtları engellemek için Set
         
         // Iterate over rows. We assume:
         // Index 0 -> Column A (Numbers)
@@ -38,10 +39,16 @@ export const parseExcelFile = (file) => {
             const id = row[0];
             const name = row[1];
             if (name !== null && name !== undefined && String(name).trim() !== '') {
-              validParticipants.push({
-                id: id !== null && id !== undefined ? String(id).trim() : '?',
-                name: capitalizeName(String(name).trim())
-              });
+              const capitalizedName = capitalizeName(String(name).trim());
+              
+              // İsim daha önce eklenmediyse listeye ekle
+              if (!seenNames.has(capitalizedName)) {
+                seenNames.add(capitalizedName);
+                validParticipants.push({
+                  id: id !== null && id !== undefined ? String(id).trim() : '?',
+                  name: capitalizedName
+                });
+              }
             }
           }
         }
